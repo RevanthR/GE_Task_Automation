@@ -2,7 +2,7 @@ import pandas as pd
 import csv
 import glob
 
-with open('new1.csv','a',newline='') as file:
+with open('new1.csv','w',newline='') as file:
     writer=csv.writer(file)
     writer.writerow(["Dashboard Name","Analysis Name","User Count","Query Count","User Count(Jan)","Query Count(Jan)","Job Function"])
 
@@ -68,6 +68,8 @@ for file in files:
     new_row.append(user_count_jan)
     new_row.append(query_count_jan)
     new_row.append(job_func)   
+
     with open('new1.csv','a',newline='') as file:
         writer=csv.writer(file)
         writer.writerow(new_row)
+        
