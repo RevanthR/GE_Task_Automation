@@ -2,11 +2,11 @@ import pandas as pd
 import csv
 import glob
 
-with open('new1.csv','w',newline='') as file:
+with open('EAM_report_summary.csv','w',newline='') as file:
     writer=csv.writer(file)
     writer.writerow(["Dashboard Name","Analysis Name","User Count","Query Count","User Count(Jan)","Query Count(Jan)","Job Function"])
 
-files= glob.glob('Data/*.csv')
+files= glob.glob('test/*.csv')
 
 # Read Multiple CSV Files in a given folder
 
@@ -16,6 +16,7 @@ for file in files:
     for i in range(len(date)):
         date[i]=date[i][0:10]
     query_count= df['Query Count']
+
     i=0
     new_date_jan=[]
     while(int(date[i][5:7])) == 1:
@@ -24,7 +25,7 @@ for file in files:
 
     query_count=list(query_count)
     query_count_val=sum(query_count)
-
+   
     # Count the number of users in Total
 
     names_user= df['Full Name']
@@ -69,7 +70,7 @@ for file in files:
     new_row.append(query_count_jan)
     new_row.append(job_func)   
 
-    with open('new1.csv','a',newline='') as file:
+    with open('EAM_report_summary.csv','a',newline='') as file:
         writer=csv.writer(file)
         writer.writerow(new_row)
         
