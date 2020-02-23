@@ -52,7 +52,7 @@ files = glob.glob(dir_name+'/*.csv')
 for file in files:
     df=pd.read_csv(file)
     date=df['Date']
-    for i in range(len(date)):
+    for i in range(len(date)): #remove the time from the date column 
         date[i]=date[i][0:10]
     query_count= df['Query Count']
     query_count=list(query_count)
@@ -64,10 +64,11 @@ for file in files:
     names_user_mon=[]
 
     new_date_mon=[]
-    for i in range(len(names_user)):
-        if(int(date[i][5:7])) == int(month_num):
-            names_user_mon.append(names_user[i])
-            query_count_mon.append(query_count[i])
+    for j in range(12):
+        for i in range(len(names_user)):
+            if(int(date[i][5:7])) == j:
+                names_user_mon.append(names_user[i])
+                query_count_mon.append(query_count[i])
 
     names_user_mon=set(names_user_mon)
     user_count_mon=len(names_user_mon)
