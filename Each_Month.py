@@ -35,7 +35,7 @@ i = 1
 dir_name_list = dir_name.split()
 new_name='_'.join(dir_name_list)
 for filename in os.listdir(dir_name):
-    dst = dir_name + "/" + new_name +"_Analysis_"+str(i)+".csv"
+    dst = dir_name + "/" + new_name +"_Analysis_July_"+str(i)+".csv"
     src = dir_name+'/'+filename
     os.rename(src,dst)
     i+=1 
@@ -52,7 +52,7 @@ files = glob.glob(dir_name+'/*.csv')
 for file in files:
     df=pd.read_csv(file)
     date=df['Date']
-    for i in range(len(date)): #remove the time from the date column 
+    for i in range(len(date)):
         date[i]=date[i][0:10]
     query_count= df['Query Count']
     query_count=list(query_count)
@@ -64,11 +64,10 @@ for file in files:
     names_user_mon=[]
 
     new_date_mon=[]
-    for j in range(12):
-        for i in range(len(names_user)):
-            if(int(date[i][5:7])) == j:
-                names_user_mon.append(names_user[i])
-                query_count_mon.append(query_count[i])
+    for i in range(len(names_user)):
+        if(int(date[i][5:7])) == int(month_num):
+            names_user_mon.append(names_user[i])
+            query_count_mon.append(query_count[i])
 
     names_user_mon=set(names_user_mon)
     user_count_mon=len(names_user_mon)
@@ -109,3 +108,4 @@ for file in files:
         writer=csv.writer(file)
         writer.writerow(new_row)
         
+ 
