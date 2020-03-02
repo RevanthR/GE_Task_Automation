@@ -9,19 +9,19 @@ while dir_name.lower() not in list(map(lambda x:x.lower(),os.listdir())):
     dir_name = input("Please Re-enter Folder Name : ")
 
 #Rename all the files in the folder with resect to the folder name
-# i = 1
-# dir_name_list = dir_name.split()
-# new_name='_'.join(dir_name_list)
-# for filename in os.listdir(dir_name):
-#     dst = dir_name + "/" + new_name +"_Analysis_July_"+str(i)+".csv"
-#     src = dir_name+'/'+filename
-#     os.rename(src,dst)
-#     i+=1 
+i = 1
+dir_name_list = dir_name.split()
+new_name='_'.join(dir_name_list)
+for filename in os.listdir(dir_name):
+    dst = dir_name + "/" + new_name +"_Analysis__"+str(i)+".csv"
+    src = dir_name+'/'+filename
+    os.rename(src,dst)
+    i+=1 
 
 # Create a new csv file to store the summary
-with open( 'Report_Summary.csv','w',newline='') as file:
+with open( new_name+'_Report_Stats.csv','w',newline='') as file:
     writer=csv.writer(file)
-    writer.writerow(["Dashboard Name","Analysis Name","User Count Year","Query Count Year","Jan_User","Feb_User","Mar_User","Apr_User","May_User","Jun_User","July_User","Aug_User","Sep_User","Oct_User","Nov_User","Dec_User","Jan_Query","Feb_Query","Mar_Query","Apr_Query","May_Query","Jun_Query","July_Query","Aug_Query","Sep_Query","Oct_Query","Nov_Query","Dec_Query","Job_function","User Names"])
+    writer.writerow(["Dashboard Name","Analysis Name","User Count Year","Query Count Year","Query_1st_Half","Query_2nd_Half","Jan_Query","Feb_Query","Mar_Query","Apr_Query","May_Query","Jun_Query","July_Query","Aug_Query","Sep_Query","Oct_Query","Nov_Query","Dec_Query","Jan_User","Feb_User","Mar_User","Apr_User","May_User","Jun_User","July_User","Aug_User","Sep_User","Oct_User","Nov_User","Dec_User","Job_function","User Names"])
 
 # Read Multiple CSV Files in a given folder
 
@@ -60,6 +60,8 @@ for file in files:
     user_year=list(set(user_count_year))
     user_count_year=len(set(user_count_year))
     month_query_count=list(dict_month_query_count.values())
+    month_query_count_jan_jun = sum(month_query_count[:6])
+    month_query_count_jul_dec = sum(month_query_count[6:])
     year_query_count=sum(month_query_count)
     report_name=df['Report/Analysis']
     report_name=list(report_name)
@@ -80,8 +82,7 @@ for file in files:
 
     #Get the user
     user_year='/ '.join(user_year)
-    # print(dashboard_name,analysis_name, names_user_count,query_count_val, user_count_mon, query_count_mon_val, job_func)
-
+    
     # Write the list into a csv file
 
     new_row=[]
@@ -89,12 +90,14 @@ for file in files:
     new_row.append(analysis_name)
     new_row.append(user_count_year)
     new_row.append(year_query_count)
-    new_row=new_row+user_count_month
+    new_row.append(month_query_count_jan_jun)
+    new_row.append(month_query_count_jul_dec)
     new_row=new_row+(month_query_count)
+    new_row=new_row+user_count_month
     new_row.append(job_func)   
     new_row.append(user_year)
     print(new_row)
-    with open('Report_Summary.csv','a',newline='') as file:
+    with open(new_name+'_Report_Stats.csv','a',newline='') as file:
         writer=csv.writer(file)
         writer.writerow(new_row)
         

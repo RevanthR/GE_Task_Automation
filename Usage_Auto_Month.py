@@ -35,7 +35,7 @@ i = 1
 dir_name_list = dir_name.split()
 new_name='_'.join(dir_name_list)
 for filename in os.listdir(dir_name):
-    dst = dir_name + "/" + new_name +"_Analysis_"+str(i)+".csv"
+    dst = dir_name + "/" + new_name +"_Analysis_July_"+str(i)+".csv"
     src = dir_name+'/'+filename
     os.rename(src,dst)
     i+=1 
